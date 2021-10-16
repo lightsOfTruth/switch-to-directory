@@ -1,0 +1,98 @@
+#!/bin/bash
+
+declare -A COLOURS
+COLOURS=( [SET]='\033[0m' [DARKGRAY]='\033[1;30m' [RED]='\033[0;31m' [WHITE]='\033[1;37m' [LIGHTRED]='\033[1;31m' [GREEN]='\033[0;32m' [PURPLE]='\033[0;35m' [CYAN]='\033[0;36m' [YELLOW]='\033[1;33m' )
+ENDCOLOR='\033[0m'
+ROOT=~/devShared
+declare -A PATHS
+
+PATHS=( 
+[core]="${ROOT}/corelogicShared",
+[dev]="${ROOT}/devShared"
+)
+
+# $BASH_SOURCE always contains the name/path of the script.
+# $0 only contains the name/path of the script when NOT sourced.
+
+echoColour () {
+
+    if [ "${COLOURS[${1}]}" ]; then 
+           echo -e "${COLOURS[${1}]}$2${COLOURS[SET]}"
+           
+        elif [ $# -gt 1 ]; then
+        	echoColour WHITE "${2}"
+        else
+        	echoColour WHITE "${1}"	
+    fi
+}
+
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    echoColour RED "Error: Script must be sourced.\nUse source <COMMAND>"
+    exit 1
+fi
+
+function showShortCuts () {
+	printf "%-30s %-30s\n" "SHORT HAND" "PATH"
+
+	for x in "${!PATHS[@]}"; do printf "%-30s %-30s\n" ${x} ${PATHS[$x]} ; done
+
+}
+
+function doesPathExist () {
+echo "entered path - $1"
+	if [ ! -d $1 ]; then
+		echoColour RED "path ${1} does not exist"
+		exit 1
+	else 
+		echoColour GREEN "path ${1} exists"
+	
+	fi
+
+}
+
+ function isShortHandInArray () {
+        for shortHand in "${!PATHS[@]}"; do
+                if [ $1 == ${shortHand} ]; then
+                    echo "${1} key is already mapped to ${PATHS[$shortHand]}"
+                 
+                    read -p "please enter another short hand key: " newCore
+                    echo "you have entered ${newCore}"
+                    break
+                fi
+         done
+
+}
+
+
+
+function switch ()
+{
+
+case $1 in
+	core)
+  		echoColour "changing directory to ${ROOT}/corelogicShared"
+  		cd $ROOT/corelogicShared
+  	;;
+  	dev)
+  		echoColour "changing directory to ${ROOT}"
+  		cd $ROOT
+  	;;
+  	ls)
+  		showShortCuts
+  	;;
+  	add)
+  		( doesPathExist $3 )		  		
+  		
+  		if [[ $? -eq 0 ]]; then
+  			isShortHandInArray $2
+  		else
+  			echoColour WHITE "please enter again with valid path"
+  		fi
+  	;;
+esac
+
+}
+
+
+switch $1 $2 $3 $4
