@@ -7,8 +7,10 @@ ROOT=~/devShared
 declare -A PATHS
 
 PATHS=( 
-[core]="${ROOT}/corelogicShared",
-[dev]="${ROOT}/devShared"
+[core]="${ROOT}/corelogicShared"
+[dev]="${ROOT}"
+[omnia]="${ROOT}/corelogicShared/omnia"
+[velox]="${ROOT}/corelogicShared/velox"
 )
 
 # $BASH_SOURCE always contains the name/path of the script.
@@ -66,6 +68,14 @@ echo "entered path - $1"
 
 
 
+for key in "${!PATHS[@]}"; do
+	if [ ${key} == $1 ]; then
+		echoColour "changing directory to ${PATHS[${key}]}"
+		cd ${PATHS[${key}]}
+	fi	
+done
+
+
 function switch ()
 {
 
@@ -95,4 +105,4 @@ esac
 }
 
 
-switch $1 $2 $3 $4
+# switch $1 $2 $3 $4
