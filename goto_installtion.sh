@@ -42,7 +42,7 @@ create_alias() {
 # Main script logic
 is_sudo
 
-script_url="https://raw.githubusercontent.com/example/repo/main/script.sh"
+script_url="https://raw.githubusercontent.com/lightsOfTruth/switch-to-directory/main/goto_installtion.sh"
 script_name="gotopath"
 # temp_dir=$(mktemp -d)
 # install_dir="$temp_dir"
