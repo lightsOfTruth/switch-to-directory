@@ -45,7 +45,7 @@ echoColour() {
 if [[ ! -r "$CONFIG_PATH" ]]; then
         echoColour RED "Error: Config file $CONFIG_PATH does not exist or is not readable."
 
-        # read -p "Do you want to create a gotopath config file now? (yes/no): " answer
+        # read -p "Do you want to create a switchto config file now? (yes/no): " answer
 
         # case "$answer" in
         # [Yy]es)
