@@ -39,12 +39,6 @@ echoColour() {
         fi
 }
 
-# if [ -z "${BASH_VERSION}" ] || [ -n "${ZSH_VERSION}" ]; then
-#   # shellcheck disable=SC2016
-#   echoColour >&2 LIGHT RED 'Error: the install instructions explicitly say to pipe the install script to `bash`; please follow them'
-#   exit 1
-# fi
-
 # Check if the config file exists and is readable
 # -r: tests if the file exists and is readable by the current user
 # !: negates the condition, so we're checking if the file is NOT readable
@@ -70,7 +64,7 @@ while IFS='=' read -r key value; do
 
                 PATHS[$key]=$value
         fi
-done <$CONFIG
+done <"$CONFIG"
 
 function showShortCuts() {
         printf "%-30s %-30s\n" "SHORT HAND" "PATH"
@@ -97,12 +91,17 @@ fi
 # }
 
 goto() {
-        for key in "${!PATHS[@]}"; do
-                if [ ${key} == $1 ]; then
-                        echoColour "changing directory to ${PATHS[${key}]}"
-                        cd "${PATHS[${key}]}" || exit
-                fi
-        done
+        echo "entered goto function"
+        [[ ! -v PATHS[$1] ]] && echoColour LIGHTRED "$1 does not exist in paths declared in .gotoconfig" && return 1
+
+        cd "${PATHS[${1}]}" || exit 1
+
+        # for key in "${!PATHS[@]}"; do
+        #         if [ ${key} == $1 ]; then
+        #                 echoColour "changing directory to ${PATHS[${key}]}"
+        #                 cd "${PATHS[${key}]}" || exit
+        #         fi
+        # done
 }
 
 while [ $# -gt 0 ]; do
@@ -137,5 +136,3 @@ while [ $# -gt 0 ]; do
                 ;;
         esac
 done
-
-
