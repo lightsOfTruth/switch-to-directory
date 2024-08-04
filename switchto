@@ -96,6 +96,15 @@ fi
 #        fi
 # }
 
+goto() {
+        for key in "${!PATHS[@]}"; do
+                if [ ${key} == $1 ]; then
+                        echoColour "changing directory to ${PATHS[${key}]}"
+                        cd "${PATHS[${key}]}" || exit
+                fi
+        done
+}
+
 while [ $# -gt 0 ]; do
         arg="$1"
 
@@ -129,11 +138,4 @@ while [ $# -gt 0 ]; do
         esac
 done
 
-goto() {
-        for key in "${!PATHS[@]}"; do
-                if [ ${key} == $1 ]; then
-                        echoColour "changing directory to ${PATHS[${key}]}"
-                        cd ${PATHS[${key}]}
-                fi
-        done
-}
+
