@@ -5,7 +5,7 @@ ENDCOLOR='\033[0m'
 ROOT=~/
 
 declare -A PATHS
-CONFIG="$HOME/.gotoconfig"
+CONFIG_PATH="$HOME/.switchtoconfig"
 
 usage() {
         cat >&2 <<END_USAGE
@@ -42,12 +42,29 @@ echoColour() {
 # Check if the config file exists and is readable
 # -r: tests if the file exists and is readable by the current user
 # !: negates the condition, so we're checking if the file is NOT readable
-if [[ ! -r "$CONFIG" ]]; then
-        echoColour RED "Error: Config file $CONFIG does not exist or is not readable."
-        return 1
+if [[ ! -r "$CONFIG_PATH" ]]; then
+        echoColour RED "Error: Config file $CONFIG_PATH does not exist or is not readable."
+
+        # read -p "Do you want to create a gotopath config file now? (yes/no): " answer
+
+        # case "$answer" in
+        # [Yy]es)
+        # echoColour WHITE "Creating config file..."
+        # echo "home=$HOME" > "$HOME/.switchtoconfig"
+        # return 0
+        # ;;
+        # [Nn]o)
+        # echo "Exiting..."
+        # return 0
+        # ;;
+        # *)
+        # echo "Invalid input. Please enter yes or no."
+        # ;;
+        # esac
+        
 fi
 
-# ( doesFileExist $CONFIG )
+# ( doesFileExist $CONFIG_PATH )
 #                 if [[ $? -ne 0 ]]; then
 #                    #echo "config file found"
 #                 # else
@@ -64,7 +81,7 @@ while IFS='=' read -r key value; do
 
                 PATHS[$key]=$value
         fi
-done <"$CONFIG"
+done <"$CONFIG_PATH"
 
 function showShortCuts() {
         printf "%-30s %-30s\n" "SHORT HAND" "PATH"
@@ -91,9 +108,8 @@ fi
 # }
 
 goto() {
-        echo "entered goto function"
         [[ ! -v PATHS[$1] ]] && echoColour LIGHTRED "$1 does not exist in paths declared in .gotoconfig" && return 1
-
+        echoColour "changing directory to ${PATHS[${1}]}"
         cd "${PATHS[${1}]}" || exit 1
 
         # for key in "${!PATHS[@]}"; do
