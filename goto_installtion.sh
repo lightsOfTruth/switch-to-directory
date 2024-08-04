@@ -44,13 +44,15 @@ is_sudo
 
 script_url="https://raw.githubusercontent.com/lightsOfTruth/switch-to-directory/main/switchto"
 script_name="gotopath"
-# temp_dir=$(mktemp -d)
-# install_dir="$temp_dir"
-install_dir="/usr/local/bin"
-echo "Downloading script to $install_dir"
 
+temp_dir=$(mktemp -d)
 # Download the script
-sudo curl -sL "$script_url" | tee "$install_dir/$script_name"
+echo "Downloading script to $temp_dir/$script_name"
+curl -sL "$script_url" > "$temp_dir/$script_name"
+
+install_dir="/usr/local/bin"
+echo "moving script  $temp_dir/$script_name to $install_dir"
+sudo mv "$temp_dir/$script_name" $install_dir
 
 sudo chmod +x "$install_dir/$script_name"
 
