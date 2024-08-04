@@ -50,7 +50,7 @@ install_dir="/usr/local/bin"
 echo "Downloading script to $install_dir"
 
 # Download the script
-sudo curl -sL "$script_url" > "$install_dir/$script_name"
+sudo curl -sL "$script_url" | tee "$install_dir/$script_name"
 
 sudo chmod +x "$install_dir/$script_name"
 
