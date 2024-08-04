@@ -2,8 +2,8 @@
 
 To **install** either download and run the script manually, or use the following cURL or Wget command:
 ```sh
-curl -o- https://raw.githubusercontent.com/lightsOfTruth/switch-to-directory/main/switchto | bash
+curl -o- https://raw.githubusercontent.com/lightsOfTruth/switch-to-directory/main/goto_installtion.sh | bash
 ```
 ```sh
-wget -qO- https://raw.githubusercontent.com/lightsOfTruth/switch-to-directory/main/switchto | bash
+wget -qO- https://raw.githubusercontent.com/lightsOfTruth/switch-to-directory/main/goto_installtion.sh | bash
 ```
