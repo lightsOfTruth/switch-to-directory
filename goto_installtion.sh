@@ -69,3 +69,4 @@ sudo chmod +x "$install_dir/$script_name"
 create_alias "ccd" "/usr/local/bin/$script_name"
 
 echo "Script installed successfully. Alias $script_name created."
+echo "Run 'source ~/.bashrc' or 'source ~/.zshrc' to apply the changes."
