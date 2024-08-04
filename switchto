@@ -5,7 +5,7 @@ ENDCOLOR='\033[0m'
 ROOT=~/
 
 declare -A PATHS
-CONFIG=/home/dev/.gotoconfig
+CONFIG="$HOME/.gotoconfig"
 
 usage() {
         cat >&2 <<END_USAGE
@@ -14,8 +14,8 @@ FLAGS:
     -h, --help                  Prints help information
 
 OPTIONS:
-        --show-paths            Show avilable paths
-        [ARG]                   Enter your shortcut key for the path you would like to cd to  
+    -p, --show-paths            Show avilable paths
+    [ARG]                       Enter your shortcut key for the path you would like to cd to  
 END_USAGE
 }
 
